@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {Place.class}, version = 1, exportSchema = false)
+@Database(entities = {PlaceEntry.class}, version = 1, exportSchema = false)
 public abstract class PlaceDatabase extends RoomDatabase {
 
     /*********************************************

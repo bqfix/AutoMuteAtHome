@@ -14,18 +14,18 @@ import java.util.List;
 public interface PlaceDao {
 
     @Query("SELECT * FROM places ORDER BY id")
-    LiveData<List<Place>> loadAllSavedPlaces();
+    LiveData<List<PlaceEntry>> loadAllSavedPlaces();
 
     @Query("SELECT * FROM places WHERE id = :id")
-    LiveData<Place> loadSavedPlaceById(int id);
+    LiveData<PlaceEntry> loadSavedPlaceById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNewPlace(Place place);
+    void insertNewPlace(PlaceEntry placeEntry);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateSavedPlace(Place place);
+    void updateSavedPlace(PlaceEntry placeEntry);
 
     @Delete
-    void deletePlace(Place place);
+    void deletePlace(PlaceEntry placeEntry);
 
 }

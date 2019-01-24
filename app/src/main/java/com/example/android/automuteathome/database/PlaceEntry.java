@@ -1,27 +1,20 @@
 package com.example.android.automuteathome.database;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "places")
-public class Place {
+public class PlaceEntry {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     private int id;
     private boolean muteOnEnter;
-    private boolean muteOnExit;
+    private boolean unmuteOnExit;
 
-    @Ignore
-    public Place(int id, boolean muteOnEnter, boolean muteOnExit) {
+    public PlaceEntry(int id, boolean muteOnEnter, boolean unmuteOnExit) {
         this.id = id;
         this.muteOnEnter = muteOnEnter;
-        this.muteOnExit = muteOnExit;
-    }
-
-    public Place(boolean muteOnEnter, boolean muteOnExit) {
-        this.muteOnEnter = muteOnEnter;
-        this.muteOnExit = muteOnExit;
+        this.unmuteOnExit = unmuteOnExit;
     }
 
     public void setId(int id) {
@@ -32,8 +25,8 @@ public class Place {
         this.muteOnEnter = muteOnEnter;
     }
 
-    public void setMuteOnExit(boolean muteOnExit) {
-        this.muteOnExit = muteOnExit;
+    public void setUnmuteOnExit(boolean unmuteOnExit) {
+        this.unmuteOnExit = unmuteOnExit;
     }
 
     public int getId() {
@@ -44,7 +37,7 @@ public class Place {
         return muteOnEnter;
     }
 
-    public boolean isMuteOnExit() {
-        return muteOnExit;
+    public boolean isUnmuteOnExit() {
+        return unmuteOnExit;
     }
 }
