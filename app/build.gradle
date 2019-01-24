@@ -34,6 +34,10 @@ dependencies {
     //RecyclerView Dependency
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
+    //GooglePlayServices Dependencies
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation "com.google.android.gms:play-services-places:16.0.0"
+
     //Basic dependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
