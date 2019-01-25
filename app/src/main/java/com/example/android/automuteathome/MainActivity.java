@@ -1,6 +1,7 @@
 package com.example.android.automuteathome;
 
 import android.Manifest;
+import android.arch.lifecycle.LiveData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -10,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -25,7 +28,9 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, PlaceAdapter.PlaceClickHandler {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_FINE_LOCATION_CODE = 777;
@@ -33,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private PlaceDatabase mPlaceDatabase;
     private FloatingActionButton mAddFAB;
+    private RecyclerView mRecyclerView;
+    private PlaceAdapter mAdapter;
+    private List<PlaceEntry> mPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         //Assign views
         mAddFAB = (FloatingActionButton) findViewById(R.id.add_fab);
+        mRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
+
+        //RecyclerView setup
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new PlaceAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
 
         //Add onClickListeners
         mAddFAB.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addApi(Places.GEO_DATA_API)
                 .enableAutoManage(this, this)
                 .build();
+
+        /* Access List of PlaceEntries built from Database, and check each id individually
+         *   to add name and address to the List (this is necessary because Google prohibits
+         *   saving anything but the id in the database).
+         */
+
+
     }
 
     @Override
@@ -148,5 +171,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    //Override of interface to handle item clicks
+    @Override
+    public void onItemClick(PlaceEntry placeEntry) {
+        Toast.makeText(this, "Temporary", Toast.LENGTH_LONG).show();
     }
 }
