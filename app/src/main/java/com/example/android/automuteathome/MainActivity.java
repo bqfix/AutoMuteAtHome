@@ -137,11 +137,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         Toast.makeText(this, getString(R.string.no_place_selected), Toast.LENGTH_LONG).show();
                         return;
                     }
-                    //If okay, add to database
+                    //If okay, add to database (base status is to mute on enter, unmute on exit)
                     String id = place.getId();
-                    boolean muteOnEnter = true;
-                    boolean unmuteOnExit = true;
-                    final PlaceEntry placeEntry = new PlaceEntry(id, muteOnEnter, unmuteOnExit);
+                    final PlaceEntry placeEntry = new PlaceEntry(id, true, false);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
@@ -149,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             mPlaceDatabase.placeDao().insertNewPlace(placeEntry);
                         }
                     });
+                    Toast.makeText(MainActivity.this, getString(R.string.added_to_database), Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -178,7 +177,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     //Override of interface to handle item clicks
     @Override
     public void onItemClick(PlaceEntry placeEntry) {
-        Toast.makeText(this, "Temporary", Toast.LENGTH_LONG).show();
+        Intent editIntent = new Intent(MainActivity.this, EditPlaceActivity.class);
+        editIntent.putExtra(getString(R.string.edit_intent_parcelable_key), placeEntry);
+        startActivity(editIntent);
     }
 
     /* Access List of PlaceEntries built from Database, and check each id individually
@@ -210,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         }
                         //Finally, set mPlaces to RecyclerView
                         mAdapter.setPlaces(mPlaces);
+
+                        places.release();
                     }
                 });
             }

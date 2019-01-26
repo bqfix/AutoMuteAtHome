@@ -3,4 +3,19 @@
 
     <!-- Main Activity strings-->
     <string name="no_place_selected">No place selected.</string>
+    <string name="edit_intent_parcelable_key">place_parcelable</string>
+    <string name="added_to_database">Added to database.</string>
+
+    <!-- Edit Place Activity strings-->
+    <string name="edit_place_activity_title">Edit Place</string>
+    <string name="parcelable_not_available_error">Place data not found.</string>
+    <string name="updated_entry">Updated entry.</string>
+    <string name="changes_discarded">Changes discarded.</string>
+
+    <string name="name_tv">Name:</string>
+    <string name="address_tv">Address:</string>
+    <string name="mute_on_enter">Mute On Enter</string>
+    <string name="unmute_on_enter">Unmute On Enter</string>
+    <string name="mute_on_exit">Mute On Exit</string>
+    <string name="unmute_on_exit">Mute On Exit</string>
 </resources>

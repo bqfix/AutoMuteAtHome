@@ -63,9 +63,20 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     public void onBindViewHolder(@NonNull PlaceViewHolder placeViewHolder, int position) {
         PlaceEntry place = mPlaces.get(position);
 
-        //Set name and address
-        placeViewHolder.mNameTextView.setText(place.getPlaceName());
-        placeViewHolder.mAddressTextView.setText(place.getPlaceAddress());
+        //Set name and address (prioritize custom user input)
+        String userInputName = place.getUserInputName();
+        if (userInputName != null && !(userInputName.isEmpty())) {
+            placeViewHolder.mNameTextView.setText(userInputName);
+        } else {
+            placeViewHolder.mNameTextView.setText(place.getPlaceName());
+        }
+
+        String userInputAddress = place.getUserInputAddress();
+        if (userInputAddress != null && !(userInputAddress.isEmpty())) {
+            placeViewHolder.mAddressTextView.setText(userInputAddress);
+        } else {
+            placeViewHolder.mAddressTextView.setText(place.getPlaceAddress());
+        }
     }
 
     @Override
