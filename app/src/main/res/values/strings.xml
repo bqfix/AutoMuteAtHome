@@ -5,12 +5,15 @@
     <string name="no_place_selected">No place selected.</string>
     <string name="edit_intent_parcelable_key">place_parcelable</string>
     <string name="added_to_database">Added to database.</string>
+    <string name="database_empty_error">Let\'s begin by adding a place to the database!\nClick the add button!</string>
 
     <!-- Edit Place Activity strings-->
+    <string name="delete_action">Delete</string>
     <string name="edit_place_activity_title">Edit Place</string>
     <string name="parcelable_not_available_error">Place data not found.</string>
-    <string name="updated_entry">Updated entry.</string>
+    <string name="updated_entry">Updated entry in database.</string>
     <string name="changes_discarded">Changes discarded.</string>
+    <string name="deleted_entry">Entry deleted from database.</string>
 
     <string name="name_tv">Name:</string>
     <string name="address_tv">Address:</string>

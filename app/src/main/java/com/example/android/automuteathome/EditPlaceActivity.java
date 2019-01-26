@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -96,5 +99,30 @@ public class EditPlaceActivity extends AppCompatActivity {
         Toast.makeText(this, getString(R.string.changes_discarded), Toast.LENGTH_SHORT).show();
     }
 
-    //TODO 3 make menu options for delete
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = this.getMenuInflater();
+        inflater.inflate(R.menu.edit_place_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.action_delete): {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDatabase.placeDao().deletePlace(mPlaceEntry);
+                    }
+                });
+                Toast.makeText(this, getString(R.string.deleted_entry), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            case (android.R.id.home) : {
+                onBackPressed();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
