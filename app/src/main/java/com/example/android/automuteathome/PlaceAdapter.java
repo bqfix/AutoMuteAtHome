@@ -70,7 +70,11 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     @Override
     public int getItemCount() {
-        return mPlaces.size();
+        if (mPlaces != null) {
+            return mPlaces.size();
+        } else {
+            return 0;
+        }
     }
 
     //Helper method for updating data set
