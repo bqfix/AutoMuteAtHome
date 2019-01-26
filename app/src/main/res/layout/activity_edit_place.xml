@@ -24,7 +24,8 @@
             android:id="@+id/name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:layout_margin="8dp"
+            android:focusedByDefault="false"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -39,25 +40,32 @@
             android:id="@+id/address_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:layout_margin="8dp"
+            android:focusedByDefault="false"/>
 
         <Switch
             android:id="@+id/enter_mute_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:padding="16dp"
+            android:showText="true"
+            android:text="@string/enter_location"
             android:textColor="@android:color/black"
-            android:textOff="@string/unmute_on_enter"
-            android:textOn="@string/mute_on_enter" />
+            android:textOff="@string/unmute"
+            android:textOn="@string/mute" />
 
         <Switch
             android:id="@+id/exit_mute_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:padding="16dp"
+            android:showText="true"
+            android:text="@string/exit_location"
             android:textColor="@android:color/black"
-            android:textOff="@string/unmute_on_exit"
-            android:textOn="@string/mute_on_exit"/>
+            android:textOff="@string/unmute"
+            android:textOn="@string/mute" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/save_fab"
@@ -65,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:src="@android:drawable/ic_menu_save"/>
+            android:src="@android:drawable/ic_menu_save" />
 
     </LinearLayout>
 

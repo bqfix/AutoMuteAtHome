@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.automuteathome.database.PlaceDatabase;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private PlaceAdapter mAdapter;
     private List<PlaceEntry> mPlaces;
     private GoogleApiClient mClient;
+    private TextView mErrorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //Assign views
         mAddFAB = (FloatingActionButton) findViewById(R.id.add_fab);
         mRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
+        mErrorText = (TextView) findViewById(R.id.recycler_view_error);
 
         //RecyclerView setup
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -197,24 +200,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 for (int position = 0; position < places.size(); position++) {
                     placeIds.add(places.get(position).getId());
                 }
-                //Make API call
-                PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mClient, placeIds.toArray(new String[placeIds.size()]));
-                //Callback to process returned PlaceBuffer
-                placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                    @Override
-                    public void onResult(@NonNull PlaceBuffer places) {
-                        //Iterate through list of places and add name and address to each PlaceEntry in mPlaces
-                        for (int position = 0; position < mPlaces.size(); position++) {
-                            Place currentPlace = places.get(position);
-                            mPlaces.get(position).setPlaceName(currentPlace.getName().toString());
-                            mPlaces.get(position).setPlaceAddress(currentPlace.getName().toString());
-                        }
-                        //Finally, set mPlaces to RecyclerView
-                        mAdapter.setPlaces(mPlaces);
+                //If it is empty, this suggests the database is empty and there is no call needed, instead show helper view
+                if (!(placeIds.isEmpty())) {
+                    //Ensure that error text is gone
+                    mErrorText.setVisibility(View.GONE);
+                    //Make API call
+                    PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mClient, placeIds.toArray(new String[placeIds.size()]));
+                    //Callback to process returned PlaceBuffer
+                    placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                        @Override
+                        public void onResult(@NonNull PlaceBuffer places) {
+                            //Iterate through list of places and add name and address to each PlaceEntry in mPlaces
+                            for (int position = 0; position < mPlaces.size(); position++) {
+                                Place currentPlace = places.get(position);
+                                mPlaces.get(position).setPlaceName(currentPlace.getName().toString());
+                                mPlaces.get(position).setPlaceAddress(currentPlace.getName().toString());
+                            }
+                            //Finally, set mPlaces to RecyclerView
+                            mAdapter.setPlaces(mPlaces);
 
-                        places.release();
-                    }
-                });
+                            places.release();
+                        }
+                    });
+                } else {
+                    mErrorText.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

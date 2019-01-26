@@ -5,7 +5,7 @@
     <string name="no_place_selected">No place selected.</string>
     <string name="edit_intent_parcelable_key">place_parcelable</string>
     <string name="added_to_database">Added to database.</string>
-    <string name="database_empty_error">Let\'s begin by adding a place to the database!\nClick the add button!</string>
+    <string name="database_empty_error">Let\'s begin by adding \na place to the database!\n\nClick the add button!</string>
 
     <!-- Edit Place Activity strings-->
     <string name="delete_action">Delete</string>
@@ -17,8 +17,8 @@
 
     <string name="name_tv">Name:</string>
     <string name="address_tv">Address:</string>
-    <string name="mute_on_enter">Mute On Enter</string>
-    <string name="unmute_on_enter">Unmute On Enter</string>
-    <string name="mute_on_exit">Mute On Exit</string>
-    <string name="unmute_on_exit">Mute On Exit</string>
+    <string name="enter_location">On entering this location:</string>
+    <string name="exit_location">On exiting this location:</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
 </resources>

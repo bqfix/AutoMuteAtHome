@@ -118,9 +118,11 @@ public class EditPlaceActivity extends AppCompatActivity {
                 });
                 Toast.makeText(this, getString(R.string.deleted_entry), Toast.LENGTH_SHORT).show();
                 finish();
+                return true;
             }
             case (android.R.id.home) : {
                 onBackPressed();
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);

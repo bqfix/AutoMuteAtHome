@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/recycler_view_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/database_empty_error"
+        android:layout_margin="8dp"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/places_rv"
         android:layout_width="match_parent"
