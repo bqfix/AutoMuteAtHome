@@ -6,6 +6,8 @@
     <string name="edit_intent_parcelable_key">place_parcelable</string>
     <string name="added_to_database">Added to database.</string>
     <string name="database_empty_error">Let\'s begin by adding \na place to the database!\n\nClick the add button!</string>
+    <string name="privacy">http://www.google.com/policies/privacy</string>
+    <string name="about_action">About</string>
 
     <!-- Edit Place Activity strings-->
     <string name="delete_action">Delete</string>
@@ -21,4 +23,7 @@
     <string name="exit_location">On exiting this location:</string>
     <string name="mute">Mute</string>
     <string name="unmute">Unmute</string>
+
+    <!-- About Activity strings -->
+    <string name="terms_of_service">This application makes use of the Google Maps API.\n\nBy using this application, you are bound by Google\'s Terms of Service.\n\nhttps://policies.google.com/terms?hl=en</string>
 </resources>
