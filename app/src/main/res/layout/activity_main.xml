@@ -33,6 +33,15 @@
         android:tint="@android:color/white"
         android:layout_margin="16dp"/>
 
+    <CheckBox
+        android:id="@+id/permissions_cb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/places_rv"
+        android:layout_above="@id/add_fab"
+        android:layout_margin="8dp"
+        android:text="@string/notification_permissions"/>
+
     <LinearLayout
         android:id="@+id/attribution_layout"
         android:layout_width="match_parent"

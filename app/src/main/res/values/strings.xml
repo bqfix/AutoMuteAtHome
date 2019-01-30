@@ -5,9 +5,10 @@
     <string name="no_place_selected">No place selected.</string>
     <string name="edit_intent_parcelable_key">place_parcelable</string>
     <string name="added_to_database">Added to database.</string>
-    <string name="database_empty_error">Let\'s begin by adding \na place to the database!\n\nClick the add button!</string>
+    <string name="database_empty_error">Let\'s begin by adding \na place to the database!\n\nFirst, grant ringer permissions!\n\nThen, click the add button!</string>
     <string name="privacy">http://www.google.com/policies/privacy</string>
     <string name="about_action">About</string>
+    <string name="notification_permissions">Grant ringer permission</string>
 
     <!-- Edit Place Activity strings-->
     <string name="delete_action">Delete</string>

@@ -1,11 +1,14 @@
 package com.example.android.automuteathome;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mClient;
     private TextView mErrorText;
     private Geofencing mGeofencing;
+    private CheckBox mPermissionsCb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mAddFAB = (FloatingActionButton) findViewById(R.id.add_fab);
         mRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
         mErrorText = (TextView) findViewById(R.id.recycler_view_error);
+        mPermissionsCb = (CheckBox) findViewById(R.id.permissions_cb);
+
+        //Checkbox setup to launch intent to grant permissions
+        mPermissionsCb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivity(intent);
+            }
+        });
 
         //RecyclerView setup
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -260,6 +275,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Check if the necessary permission is granted, disable checkbox if it is
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= 24 && !notificationManager.isNotificationPolicyAccessGranted()) {
+            mPermissionsCb.setChecked(false);
+        } else {
+            mPermissionsCb.setChecked(true);
+            mPermissionsCb.setEnabled(false);
+            mPermissionsCb.setVisibility(View.GONE);
+        }
     }
 }

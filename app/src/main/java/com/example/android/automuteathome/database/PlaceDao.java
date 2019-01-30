@@ -17,7 +17,7 @@ public interface PlaceDao {
     LiveData<List<PlaceEntry>> loadAllSavedPlaces();
 
     @Query("SELECT * FROM places WHERE id = :id")
-    LiveData<PlaceEntry> loadSavedPlaceById(int id);
+    PlaceEntry loadSavedPlaceById(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewPlace(PlaceEntry placeEntry);
