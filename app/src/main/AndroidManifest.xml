@@ -28,6 +28,8 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".AboutActivity"
             android:parentActivityName=".MainActivity"></activity>
+
+        <receiver android:name=".GeofenceBroadcastReceiver"/>
     </application>
 
 </manifest>

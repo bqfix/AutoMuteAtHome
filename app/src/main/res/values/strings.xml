@@ -24,6 +24,9 @@
     <string name="mute">Mute</string>
     <string name="unmute">Unmute</string>
 
+    <!-- Geofencing strings-->
+    <string name="security_error">Permissions error: </string>
+
     <!-- About Activity strings -->
     <string name="terms_of_service">This application makes use of the Google Maps API.\n\nBy using this application, you are bound by Google\'s Terms of Service.\n\nhttps://policies.google.com/terms?hl=en</string>
 </resources>

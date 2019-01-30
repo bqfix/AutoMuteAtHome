@@ -38,7 +38,6 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, PlaceAdapter.PlaceClickHandler {
 
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private List<PlaceEntry> mPlaces;
     private GoogleApiClient mClient;
     private TextView mErrorText;
+    private Geofencing mGeofencing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //Get instance of PlaceDatabase for later use
         mPlaceDatabase = PlaceDatabase.getInstance(this);
 
+        //Create Geofencing instance
+        mGeofencing = new Geofencing(this);
+
         //Create a client to access Google's places and location services APIs
         mClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         //SetupViewModel to check places in database and refresh RecyclerView if they have changed
-        setupViewModel();
+        setupViewModelAndGeofences();
     }
 
     @Override
@@ -192,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     /* Access List of PlaceEntries built from Database, and check each id individually
      *   to add name and address to the List (this is necessary because Google prohibits
      *   saving anything but the id in the database). */
-    public void setupViewModel() {
+    public void setupViewModelAndGeofences() {
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getPlaces().observe(this, new Observer<List<PlaceEntry>>() {
             @Override
@@ -206,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 //If it is empty, this suggests the database is empty and there is no call needed, instead show helper view
                 if (!(placeIds.isEmpty())) {
+
                     //Ensure that error text is gone
                     mErrorText.setVisibility(View.GONE);
                     //Make API call
@@ -220,9 +224,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                 mPlaces.get(position).setPlaceName(currentPlace.getName().toString());
                                 mPlaces.get(position).setPlaceAddress(currentPlace.getName().toString());
                             }
-                            //Finally, set mPlaces to RecyclerView
+                            //Set mPlaces to RecyclerView
                             mAdapter.setPlaces(mPlaces);
 
+
+                            mGeofencing.updateGeofenceList(places);
+                            mGeofencing.registerAllGeofences();
+
+                            //Finally, release PlaceBuffer to prevent data leaks
                             places.release();
                         }
                     });
